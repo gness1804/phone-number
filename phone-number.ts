@@ -4,7 +4,7 @@ const removeInvalidChars = (str: string): string => str
   .replace(/\s/g, '')
   .replace(/-/g, '')
   .replace(/\./g, '')
-  .replace(/^\+?1/g, '')
+  .replace(/^\+?1(?=\d{10})/g, '')
 
 export function clean(numStr: string): string {
   const sanitizedStr = removeInvalidChars(numStr);
@@ -22,6 +22,13 @@ export function clean(numStr: string): string {
     }
   } else if (sanitizedStr.length !== 10) {
     throw new Error('Incorrect number of digits')
+  }
+
+  // is ten digits
+  if (sanitizedStr.startsWith('0')) {
+    throw new Error('Area code cannot start with zero')
+  } else if (sanitizedStr.startsWith('1')) {
+    throw new Error('Area code cannot start with one')
   }
 
   return sanitizedStr;
