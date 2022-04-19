@@ -10,7 +10,10 @@ export function clean(numStr: string): string {
   const sanitizedStr = removeInvalidChars(numStr);
   if (sanitizedStr.match(/[a-zA-Z]/)) {
     throw new Error('Letters not permitted')
+  } else if (sanitizedStr.match(/\D/)) {
+    throw new Error('Punctuations not permitted')
   }
+
   if (sanitizedStr.length > 11) {
     throw new Error('More than 11 digits')
   } else if (sanitizedStr.length === 11) {
@@ -20,5 +23,6 @@ export function clean(numStr: string): string {
   } else if (sanitizedStr.length !== 10) {
     throw new Error('Incorrect number of digits')
   }
+
   return sanitizedStr;
 }
