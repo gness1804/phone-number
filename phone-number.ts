@@ -25,10 +25,15 @@ export function clean(numStr: string): string {
   }
 
   // is ten digits
+  const exchangeStartDigit = sanitizedStr[3];
   if (sanitizedStr.startsWith('0')) {
     throw new Error('Area code cannot start with zero')
   } else if (sanitizedStr.startsWith('1')) {
     throw new Error('Area code cannot start with one')
+  } else if (exchangeStartDigit === '0') {
+    throw new Error('Exchange code cannot start with zero')
+  } else if (exchangeStartDigit === '1') {
+    throw new Error('Exchange code cannot start with one')
   }
 
   return sanitizedStr;
