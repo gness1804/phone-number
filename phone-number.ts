@@ -4,11 +4,16 @@ const removeInvalidChars = (str: string): string => str
   .replace(/\s/g, '')
   .replace(/-/g, '')
   .replace(/\./g, '')
-  .replace(/^\+1/g, '')
+  .replace(/^\+?1/g, '')
 
 export function clean(numStr: string): string {
   const sanitizedStr = removeInvalidChars(numStr);
-  if (sanitizedStr.length === 11) {
+  if (sanitizedStr.match(/[a-zA-Z]/)) {
+    throw new Error('Letters not permitted')
+  }
+  if (sanitizedStr.length > 11) {
+    throw new Error('More than 11 digits')
+  } else if (sanitizedStr.length === 11) {
     if (!sanitizedStr.startsWith('1')) {
       throw new Error('11 digits must start with 1')
     }
